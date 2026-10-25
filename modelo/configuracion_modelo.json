@@ -1,0 +1,174 @@
+{
+  "tamano_imagen": [
+    128,
+    128,
+    3
+  ],
+  "formato_entrada": "uint8 RGB 0-255 (la normalización está dentro del modelo)",
+  "preprocesamiento_app": "corregir EXIF -> RGB -> recorte cuadrado central -> resize 128x128",
+  "umbral_confianza": 0.6,
+  "clases": [
+    {
+      "indice": 0,
+      "id_carpeta": "ag_01",
+      "nombre": "Aracely Garrido"
+    },
+    {
+      "indice": 1,
+      "id_carpeta": "ba_01",
+      "nombre": "Bladimir Aguilera"
+    },
+    {
+      "indice": 2,
+      "id_carpeta": "bf_01",
+      "nombre": "Benjamin Flores"
+    },
+    {
+      "indice": 3,
+      "id_carpeta": "bp_01",
+      "nombre": "Benjamin Palma"
+    },
+    {
+      "indice": 4,
+      "id_carpeta": "ca_01",
+      "nombre": "Camila Alves"
+    },
+    {
+      "indice": 5,
+      "id_carpeta": "cv_01",
+      "nombre": "Carlos Vasquez"
+    },
+    {
+      "indice": 6,
+      "id_carpeta": "dg_01",
+      "nombre": "Daira Guerra"
+    },
+    {
+      "indice": 7,
+      "id_carpeta": "ee_01",
+      "nombre": "Elias Esveile"
+    },
+    {
+      "indice": 8,
+      "id_carpeta": "er_01",
+      "nombre": "Eliza Ramirez"
+    },
+    {
+      "indice": 9,
+      "id_carpeta": "fq_01",
+      "nombre": "Francisco Quintana"
+    },
+    {
+      "indice": 10,
+      "id_carpeta": "fv_01",
+      "nombre": "Fabian Verasay"
+    },
+    {
+      "indice": 11,
+      "id_carpeta": "ge_01",
+      "nombre": "Gustavo Espinoza"
+    },
+    {
+      "indice": 12,
+      "id_carpeta": "gr_01",
+      "nombre": "Giselle Rojas"
+    },
+    {
+      "indice": 13,
+      "id_carpeta": "ih_01",
+      "nombre": "Irriana Herrera"
+    },
+    {
+      "indice": 14,
+      "id_carpeta": "jg_01",
+      "nombre": "Joselo Garrido"
+    },
+    {
+      "indice": 15,
+      "id_carpeta": "jm_01",
+      "nombre": "Javier Montupil"
+    },
+    {
+      "indice": 16,
+      "id_carpeta": "la_01",
+      "nombre": "Luciano Alcantara"
+    },
+    {
+      "indice": 17,
+      "id_carpeta": "mc_01",
+      "nombre": "Moises Castillo"
+    },
+    {
+      "indice": 18,
+      "id_carpeta": "me_01",
+      "nombre": "Matias Escalante"
+    },
+    {
+      "indice": 19,
+      "id_carpeta": "mf_01",
+      "nombre": "Matias Figueroa"
+    },
+    {
+      "indice": 20,
+      "id_carpeta": "mf_02",
+      "nombre": "Michelle Ferraro"
+    },
+    {
+      "indice": 21,
+      "id_carpeta": "mg_01",
+      "nombre": "Maximiliano Garrido"
+    },
+    {
+      "indice": 22,
+      "id_carpeta": "mg_02",
+      "nombre": "Manuel Garrido"
+    },
+    {
+      "indice": 23,
+      "id_carpeta": "mv_01",
+      "nombre": "Marcela Vera"
+    },
+    {
+      "indice": 24,
+      "id_carpeta": "nc_01",
+      "nombre": "Nicolas Cuevas"
+    },
+    {
+      "indice": 25,
+      "id_carpeta": "sg_01",
+      "nombre": "Sergio Garrido"
+    },
+    {
+      "indice": 26,
+      "id_carpeta": "tg_01",
+      "nombre": "Tomas Garrido"
+    },
+    {
+      "indice": 27,
+      "id_carpeta": "vm_01",
+      "nombre": "Victor Medina"
+    },
+    {
+      "indice": 28,
+      "id_carpeta": "yf_01",
+      "nombre": "Yamila Fernandez"
+    },
+    {
+      "indice": 29,
+      "id_carpeta": "zh_01",
+      "nombre": "Zoe Herrera"
+    },
+    {
+      "indice": 30,
+      "id_carpeta": "zz_01",
+      "nombre": "Zaira Zuviria"
+    }
+  ],
+  "metricas_prueba": {
+    "accuracy": 0.8226,
+    "precision_macro": 0.7903,
+    "recall_macro": 0.8226,
+    "f1_macro": 0.7946
+  },
+  "version_tensorflow": "2.21.0"
+}

@@ -1,6 +1,6 @@
 fastapi
-uvicorn
+uvicorn[standard]
 python-multipart
-torch
-torchvision
+tensorflow==2.21.0
+numpy
 Pillow
