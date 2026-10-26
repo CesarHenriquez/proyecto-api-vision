@@ -5,7 +5,9 @@
     3
   ],
   "formato_entrada": "uint8 RGB 0-255 (la normalización está dentro del modelo)",
-  "preprocesamiento_app": "corregir EXIF -> RGB -> recorte cuadrado central -> resize 128x128",
+  "preprocesamiento": "EXIF -> RGB -> detección de rostro YuNet -> recorte cuadrado con margen -> 128x128",
+  "margen_rostro": 0.3,
+  "detector_rostros": "face_detection_yunet_2023mar.onnx",
   "umbral_confianza": 0.6,
   "clases": [
     {
@@ -165,10 +167,10 @@
     }
   ],
   "metricas_prueba": {
-    "accuracy": 0.8226,
-    "precision_macro": 0.7903,
-    "recall_macro": 0.8226,
-    "f1_macro": 0.7946
+    "accuracy": 0.8525,
+    "precision_macro": 0.8548,
+    "recall_macro": 0.8548,
+    "f1_macro": 0.8409
   },
   "version_tensorflow": "2.21.0"
 }
