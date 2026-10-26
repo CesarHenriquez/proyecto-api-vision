@@ -6,9 +6,10 @@
   ],
   "formato_entrada": "uint8 RGB 0-255 (la normalización está dentro del modelo)",
   "preprocesamiento": "EXIF -> RGB -> detección de rostro YuNet -> recorte cuadrado con margen -> 128x128",
+  "entrenamiento": "CNN propia preentrenada con LFW (158 personas) + fine-tuning con dataset del curso y fotos extra",
   "margen_rostro": 0.3,
   "detector_rostros": "face_detection_yunet_2023mar.onnx",
-  "umbral_confianza": 0.6,
+  "umbral_confianza": 0.5,
   "clases": [
     {
       "indice": 0,
@@ -167,10 +168,10 @@
     }
   ],
   "metricas_prueba": {
-    "accuracy": 0.8525,
-    "precision_macro": 0.8548,
-    "recall_macro": 0.8548,
-    "f1_macro": 0.8409
+    "accuracy": 0.8689,
+    "precision_macro": 0.8441,
+    "recall_macro": 0.871,
+    "f1_macro": 0.8452
   },
   "version_tensorflow": "2.21.0"
 }
