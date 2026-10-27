@@ -1,8 +1,8 @@
 """
 API de reconocimiento facial - EP2 Deep Learning (AVY1103)
 Basada en la plantilla trigoduoc/proyecto-api-vision.
-Modelo: CNN propia entrenada en Colab con rostros recortados (modelo/modelo_rostros.keras).
-Preprocesamiento idéntico al entrenamiento: detección de rostro (YuNet) -> recorte con margen -> 128x128x3.
+Modelo: CNN propia preentrenada con LFW y ajustada con el dataset del curso (modelo/modelo_rostros.keras).
+Preprocesamiento igual al entrenamiento: detección de rostro (YuNet) -> recorte con margen -> 128x128x3.
 """
 import io
 import json
@@ -18,7 +18,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 CARPETA_MODELO = Path(__file__).parent / "modelo"
 configuracion = json.loads((CARPETA_MODELO / "configuracion_modelo.json").read_text(encoding="utf-8"))
 TAMANO_IMAGEN = configuracion["tamano_imagen"][0]          # 128
-UMBRAL_CONFIANZA = configuracion["umbral_confianza"]       # 0.6
+UMBRAL_CONFIANZA = configuracion["umbral_confianza"]       # 0.5
 MARGEN_ROSTRO = configuracion["margen_rostro"]             # 0.30
 CLASES = configuracion["clases"]                           # índice i de la salida softmax -> CLASES[i]
 LADO_DETECCION = 640
@@ -32,14 +32,15 @@ app = FastAPI(
     title="API de Reconocimiento Facial - Deep Learning DuocUC",
     description="Recibe una foto (128x128x3 desde la app), detecta el rostro y responde a qué persona del "
                 "curso corresponde, o indica que no está en la base de datos si la confianza es menor al umbral.",
-    version="2.0.0",
+    version="4.0.0",
 )
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
 def recortar_rostro(imagen: Image.Image):
-    """Mismo recorte que en Colab (Etapa 10b): cara más grande + 30% de margen, cuadrado dentro de la imagen.
-    Devuelve (matriz uint8 128x128x3, se_detecto_rostro)."""
+    """Recorta la cara más grande con 30% de margen, con la MISMA escala que en el entrenamiento.
+    Si el margen se sale de la imagen (recorte muy ajustado en la app), se rellena repitiendo los bordes
+    en vez de agrandar la cara. Devuelve (matriz uint8 128x128x3, se_detecto_rostro)."""
     ancho, alto = imagen.size
     escala = LADO_DETECCION / max(ancho, alto)
     imagen_deteccion = imagen.resize((int(ancho * escala), int(alto * escala)))
@@ -51,11 +52,15 @@ def recortar_rostro(imagen: Image.Image):
 
     x, y, w, h = max(rostros, key=lambda r: r[2] * r[3])[:4]
     centro_x, centro_y = (x + w / 2) / escala, (y + h / 2) / escala
-    lado = int(min(max(w, h) / escala * (1 + 2 * MARGEN_ROSTRO), ancho, alto))
-    izquierda = int(np.clip(centro_x - lado / 2, 0, ancho - lado))
-    arriba = int(np.clip(centro_y - lado / 2, 0, alto - lado))
-    recorte = imagen.crop((izquierda, arriba, izquierda + lado, arriba + lado))
-    recorte = recorte.resize((TAMANO_IMAGEN, TAMANO_IMAGEN), Image.BILINEAR)
+    lado = max(1, int(round(max(w, h) / escala * (1 + 2 * MARGEN_ROSTRO))))
+
+    matriz = np.asarray(imagen)
+    relleno = lado
+    matriz_rellena = np.pad(matriz, ((relleno, relleno), (relleno, relleno), (0, 0)), mode="edge")
+    izquierda = int(round(centro_x - lado / 2)) + relleno
+    arriba = int(round(centro_y - lado / 2)) + relleno
+    recorte = matriz_rellena[arriba:arriba + lado, izquierda:izquierda + lado]
+    recorte = Image.fromarray(recorte).resize((TAMANO_IMAGEN, TAMANO_IMAGEN), Image.BILINEAR)
     return np.asarray(recorte, dtype=np.uint8), True
 
 
